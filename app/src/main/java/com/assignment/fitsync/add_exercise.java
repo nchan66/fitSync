@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -18,6 +20,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,23 +35,11 @@ public class add_exercise extends AppCompatActivity {
 
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public CollectionReference members = db.collection("members");
+    public EditText exercise_view;
+    public EditText set_view;
+    public EditText rep_view;
+    public Spinner day_view;
 
-
-    public void setup() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
-                .build();
-        db.setFirestoreSettings(settings);
-    }
-    public void setupCacheSize() {
-        // [START fs_setup_cache]
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setCacheSizeBytes(FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED)
-                .build();
-        db.setFirestoreSettings(settings);
-        // [END fs_setup_cache]
-    }
 
 
     @Override
@@ -55,11 +47,10 @@ public class add_exercise extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_exercise);
 
-
-
-
-
-
+        exercise_view = findViewById((R.id.exercise_name));
+        set_view = findViewById((R.id.sets));
+        rep_view = findViewById((R.id.reps));
+        day_view = findViewById(R.id.day_spinner);
 
 
 
@@ -76,12 +67,39 @@ public class add_exercise extends AppCompatActivity {
 
     public void add(View view) {
 
-        Map<String, Object> data1 = new HashMap<>();
-        List exercises = new ArrayList();
-        data1.put("exercise", "deadlift");
-        data1.put("sets", 3);
-        data1.put("reps", 10);
-        members.document("BroScienceLife").set(data1)
+        Map<String, Object> dataPacket = new HashMap<>();   //Final data packet to be added to document
+        List exercises = new ArrayList();                   //List of exercise maps
+        Map<String, Object> exercise_map = new HashMap<>(); //Exercise maps
+
+
+
+
+        //Getting inputs from fields in app
+
+        String exercise_name = exercise_view.getText().toString();
+
+
+        int sets = Integer.parseInt(set_view.getText().toString());
+
+
+        int reps = Integer.parseInt(rep_view.getText().toString());
+
+        String day_string = day_view.getSelectedItem().toString();
+
+        //adding values to proper keys in exercise map
+        exercise_map.put("exercise", exercise_name);
+        exercise_map.put("sets", sets);
+        exercise_map.put("reps", reps);
+
+        //Adding exercise map to list
+        exercises.add(exercise_map);
+
+        //Add exercise list to day_Obj with proper day from spinner view
+        dataPacket.put(day_string ,exercises);
+
+        System.out.println("RIGHT BEFORE DOING THE DOCUMENT SET***************************************************************************");
+        //HARDCODING BROSCIENCELIFE DOCUMENT
+        members.document("BroScienceLife").set(dataPacket)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

@@ -10,18 +10,18 @@
     tools:context=".add_exercise">
 
     <EditText
-
+        android:id="@+id/exercise_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Name of exercise" />
     <EditText
-
+        android:id="@+id/sets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:hint="number of sets" />
     <EditText
-
+        android:id="@+id/reps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
@@ -29,7 +29,7 @@
 
 
     <TextView
-
+        android:id="@+id/day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
@@ -45,7 +45,7 @@
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="goBack"
+        android:onClick="add"
         android:text="DONE" />
     <Button
         android:id="@+id/btnCancel"
