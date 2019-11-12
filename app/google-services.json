@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "726283306417",
+    "firebase_url": "https://fitsync-46722.firebaseio.com",
+    "project_id": "fitsync-46722",
+    "storage_bucket": "fitsync-46722.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726283306417:android:e14b2bb07e308d98e3a990",
+        "android_client_info": {
+          "package_name": "com.assignment.fitsync"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726283306417-ucqtis6rf3g4ptut3d5vc5urr68ua13o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJWHA-_s-wAqnxS7Y7rPchVGeuTSwOevI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726283306417-ucqtis6rf3g4ptut3d5vc5urr68ua13o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
