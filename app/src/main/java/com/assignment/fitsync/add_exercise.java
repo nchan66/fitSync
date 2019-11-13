@@ -13,17 +13,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.Transaction;
 
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +46,9 @@ public class add_exercise extends AppCompatActivity {
     public EditText set_view;
     public EditText rep_view;
     public Spinner day_view;
+    public DocumentReference userRef = db.collection("members")
+                                        .document("BroScienceLife");
+    public DocumentSnapshot userDoc;
 
 
 
@@ -51,6 +61,57 @@ public class add_exercise extends AppCompatActivity {
         set_view = findViewById((R.id.sets));
         rep_view = findViewById((R.id.reps));
         day_view = findViewById(R.id.day_spinner);
+        final Map<String, Object> default_dataPacket = new HashMap<>();   //Final data packet to be added to document
+        List default_exercises = new ArrayList();                   //List of exercise maps
+        Map<String, Object> default_exercise_map = new HashMap<>(); //Exercise maps
+
+        default_dataPacket.put("Monday", default_exercises);
+        default_dataPacket.put("Tuesday", default_exercises);
+        default_dataPacket.put("Wednesday", default_exercises);
+        default_dataPacket.put("Thursday", default_exercises);
+        default_dataPacket.put("Friday", default_exercises);
+        default_dataPacket.put("Saturday", default_exercises);
+        default_dataPacket.put("Sunday", default_exercises);
+
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    userDoc = task.getResult();
+                    if (userDoc.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + userDoc.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
+                        userRef.set(default_dataPacket)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                                        System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        System.out.println("*******************************************************");
+                                        Log.w(TAG, "Error writing document", e);
+                                    }
+                                });
+
+
+
+
+
+
+
+
+
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
 
 
 
@@ -70,20 +131,10 @@ public class add_exercise extends AppCompatActivity {
         Map<String, Object> dataPacket = new HashMap<>();   //Final data packet to be added to document
         List exercises = new ArrayList();                   //List of exercise maps
         Map<String, Object> exercise_map = new HashMap<>(); //Exercise maps
-
-
-
-
         //Getting inputs from fields in app
-
         String exercise_name = exercise_view.getText().toString();
-
-
         int sets = Integer.parseInt(set_view.getText().toString());
-
-
         int reps = Integer.parseInt(rep_view.getText().toString());
-
         String day_string = day_view.getSelectedItem().toString();
 
         //adding values to proper keys in exercise map
@@ -92,14 +143,24 @@ public class add_exercise extends AppCompatActivity {
         exercise_map.put("reps", reps);
 
         //Adding exercise map to list
+        //check if day has a list already , if it does, if list exists -> make list = that, then add
+
+        if (userDoc.exists()) {
+            Object day_list_Obj = userDoc.get(day_string);
+            ArrayList new_array_list = (ArrayList) day_list_Obj ;
+
+            exercises = new_array_list;
+        }
+
+
         exercises.add(exercise_map);
 
         //Add exercise list to day_Obj with proper day from spinner view
         dataPacket.put(day_string ,exercises);
 
-        System.out.println("RIGHT BEFORE DOING THE DOCUMENT SET***************************************************************************");
+
         //HARDCODING BROSCIENCELIFE DOCUMENT
-        members.document("BroScienceLife").set(dataPacket)
+        members.document("BroScienceLife").update(dataPacket)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
