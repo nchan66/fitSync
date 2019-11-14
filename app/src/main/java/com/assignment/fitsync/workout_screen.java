@@ -30,7 +30,7 @@ public class workout_screen extends AppCompatActivity {
 
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static CollectionReference members = db.collection("members");
-    public String userName = "BroScienceLife";                                //HARDCODING BROSCIENCE LIFE - CHANGE TO USER EMAIL FROM REGISTRATION
+    public String userName = MainActivity.userID;                                //HARDCODING BROSCIENCE LIFE - CHANGE TO USER EMAIL FROM REGISTRATION
     public DocumentReference userRef = db.collection("members").document(userName);
     public static DocumentSnapshot userDoc;
 

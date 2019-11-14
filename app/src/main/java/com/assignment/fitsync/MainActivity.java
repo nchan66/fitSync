@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -26,6 +27,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button signOutButton;
     TextView statusTextView;
     GoogleApiClient mGoogleApiClient;
+    public static String userID;
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -112,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            userID = user.getUid();
+                            Log.d(TAG, "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                            Log.d(TAG, userID);
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -142,6 +148,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public void tryLogin(View view) {
+
+        //intent to start other activity
+        Intent intent = new Intent(this, workout_screen.class);
+        startActivity(intent);
+
+
+    }
+
 }
 
 
@@ -153,14 +168,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-/**
-
-    public void tryLogin(View view) {
-
-        //intent to start other activity
-        Intent intent = new Intent(this, workout_screen.class);
-        startActivity(intent);
 
 
-    }
-**/
+

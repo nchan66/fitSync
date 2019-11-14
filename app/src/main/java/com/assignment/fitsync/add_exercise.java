@@ -48,7 +48,7 @@ public class add_exercise extends AppCompatActivity {
 
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static CollectionReference members = db.collection("members");
-    public String userName = "BroScienceLife";                                //HARDCODING BROSCIENCE LIFE - CHANGE TO USER EMAIL FROM REGISTRATION
+    public String userName = MainActivity.userID;                                //HARDCODING BROSCIENCE LIFE - CHANGE TO USER EMAIL FROM REGISTRATION
     public DocumentReference userRef = db.collection("members").document(userName);
     public static DocumentSnapshot userDoc;
 
@@ -127,7 +127,7 @@ public class add_exercise extends AppCompatActivity {
 
 
         //HARDCODING BROSCIENCELIFE DOCUMENT
-        members.document("BroScienceLife").update(dataPacket)
+        members.document(userName).update(dataPacket)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
