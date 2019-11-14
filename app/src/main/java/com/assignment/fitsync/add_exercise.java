@@ -40,15 +40,18 @@ public class add_exercise extends AppCompatActivity {
 
     private static final String TAG = "add_exercise";
 
-    public FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public CollectionReference members = db.collection("members");
+
     public EditText exercise_view;
     public EditText set_view;
     public EditText rep_view;
     public Spinner day_view;
-    public DocumentReference userRef = db.collection("members")
-                                        .document("BroScienceLife");
-    public DocumentSnapshot userDoc;
+
+    public static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static CollectionReference members = db.collection("members");
+    public String userName = "BroScienceLife";                                //HARDCODING BROSCIENCE LIFE - CHANGE TO USER EMAIL FROM REGISTRATION
+    public DocumentReference userRef = db.collection("members").document(userName);
+    public static DocumentSnapshot userDoc;
+
 
 
 
@@ -61,17 +64,7 @@ public class add_exercise extends AppCompatActivity {
         set_view = findViewById((R.id.sets));
         rep_view = findViewById((R.id.reps));
         day_view = findViewById(R.id.day_spinner);
-        final Map<String, Object> default_dataPacket = new HashMap<>();   //Final data packet to be added to document
-        List default_exercises = new ArrayList();                   //List of exercise maps
-        Map<String, Object> default_exercise_map = new HashMap<>(); //Exercise maps
 
-        default_dataPacket.put("Monday", default_exercises);
-        default_dataPacket.put("Tuesday", default_exercises);
-        default_dataPacket.put("Wednesday", default_exercises);
-        default_dataPacket.put("Thursday", default_exercises);
-        default_dataPacket.put("Friday", default_exercises);
-        default_dataPacket.put("Saturday", default_exercises);
-        default_dataPacket.put("Sunday", default_exercises);
 
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -82,29 +75,6 @@ public class add_exercise extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot data: " + userDoc.getData());
                     } else {
                         Log.d(TAG, "No such document");
-                        userRef.set(default_dataPacket)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                                        System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        System.out.println("*******************************************************");
-                                        Log.w(TAG, "Error writing document", e);
-                                    }
-                                });
-
-
-
-
-
-
-
-
 
                     }
                 } else {
@@ -112,9 +82,6 @@ public class add_exercise extends AppCompatActivity {
                 }
             }
         });
-
-
-
 
         Spinner spinner = (Spinner) findViewById(R.id.day_spinner);
 // Create an ArrayAdapter using the string array and a default spinner layout
@@ -145,12 +112,12 @@ public class add_exercise extends AppCompatActivity {
         //Adding exercise map to list
         //check if day has a list already , if it does, if list exists -> make list = that, then add
 
-        if (userDoc.exists()) {
-            Object day_list_Obj = userDoc.get(day_string);
-            ArrayList new_array_list = (ArrayList) day_list_Obj ;
 
-            exercises = new_array_list;
-        }
+        Object day_list_Obj = userDoc.get(day_string);
+        ArrayList new_array_list = (ArrayList) day_list_Obj ;
+
+        exercises = new_array_list;
+
 
 
         exercises.add(exercise_map);
