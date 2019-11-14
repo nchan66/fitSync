@@ -41,6 +41,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="100dp"
             android:onClick="tryLogin"
+            app:backgroundTint="#FF920F"
             android:text="Log in" />
 
         <Button
@@ -50,6 +51,7 @@
             android:layout_below="@+id/passText"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="46dp"
+            app:backgroundTint="#FF920F"
             android:text="Register" />
 
         <ImageView
