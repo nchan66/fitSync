@@ -30,8 +30,9 @@ public class workout_screen extends AppCompatActivity {
 
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static CollectionReference members = db.collection("members");
-    public String userName = MainActivity.userID;                                //HARDCODING BROSCIENCE LIFE - CHANGE TO USER EMAIL FROM REGISTRATION
-    public DocumentReference userRef = db.collection("members").document(userName);
+
+
+
     public static DocumentSnapshot userDoc;
 
 
@@ -39,6 +40,8 @@ public class workout_screen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_screen);
+        final String userName = MainActivity.userID;
+        final DocumentReference userRef = db.collection("members").document(userName);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
