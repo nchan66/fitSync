@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.sign_in_button:
                 signIn();
-                mHandler.postDelayed(run_workout_screen,2500);
+                mHandler.postDelayed(run_workout_screen,3000);
                 break;
         }
     }
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()){
             GoogleSignInAccount acct = result.getSignInAccount();
-            statusTextView.setText("Welcome, " + acct.getDisplayName() + ", redirecting you now...");
+            statusTextView.setText("Welcome, " + acct.getDisplayName() + ", gathering information and signing you in now...");
             login_success = true;
         }
 
