@@ -1,14 +1,12 @@
-package com.assignment.fitsync;
+package com.example.loginwithgoogle;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,8 +19,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -31,21 +27,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
     SignInButton signInButton;
     Button signOutButton;
     TextView statusTextView;
     GoogleApiClient mGoogleApiClient;
-    public static String userID = "yM5DER7WRDQ4I1jz0a4yxw5aU4m1";
-    public boolean login_success = false;
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth mAuth;
-
-    private Handler mHandler = new Handler();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,50 +57,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(this);
 
-//        signOutButton = (Button) findViewById(R.id.signOutButton);
-//        signOutButton.setOnClickListener(this);
-    }
 
-    public Runnable run_workout_screen = new Runnable() {
-        @Override
-        public void run() {
-            //intent to start other activity
-            if(login_success) {
-                Intent intent = new Intent(MainActivity.this, workout_screen.class);
-                startActivity(intent);
-            }
-        }
-    };
+
+    }
 
     @Override
     public void onClick (View v){
         switch (v.getId()){
             case R.id.sign_in_button:
                 signIn();
-                mHandler.postDelayed(run_workout_screen,3000);
                 break;
-//            case R.id.signOutButton:
-//                signOut();
-//                break;
-
         }
     }
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
     }
-    private void signOut(){
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
-            @Override
-            public void onResult(@NonNull Status status) {
-                statusTextView.setText("Signed Out");
-            }
-        });
-
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -119,11 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-                if (login_success) {
-                    Log.d(TAG, "***** logging success, starting intent for workout screen *****");
-                    Intent intent = new Intent(this, workout_screen.class);
-                    startActivity(intent);
-                }
 
             } catch (ApiException e){
                 Log.w(TAG, "Google sign in failed", e);
@@ -148,9 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            userID = user.getUid();
-                            Log.d(TAG, "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
-                            Log.d(TAG, userID);
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -176,25 +133,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()){
             GoogleSignInAccount acct = result.getSignInAccount();
-            statusTextView.setText("Welcome, " + acct.getDisplayName() + ", gathering information and signing you in now...");
-            login_success = true;
+            statusTextView.setText("Welcome, " + acct.getDisplayName());
         }
 
     }
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
