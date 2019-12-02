@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button signOutButton;
     TextView statusTextView;
     GoogleApiClient mGoogleApiClient;
-    public static String userID = "yM5DER7WRDQ4I1jz0a4yxw5aU4m1";
+    public static String userID;
     public boolean login_success = false;
 
     private static final String TAG = "SignInActivity";
@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
     }
     private void signOut(){
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
