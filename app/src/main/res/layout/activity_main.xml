@@ -1,63 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:id="@+id/activity_main"
-    android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        tools:context=".MainActivity">
 
 
-        <EditText
-            android:id="@+id/userText"
-            android:layout_above="@id/passText"
-            android:layout_centerHorizontal="true"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:ems="5"
-            android:hint="Username"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/status_textview"
+                    android:layout_marginLeft="130dp"
+                    android:layout_marginTop="250dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_button"
+                    android:layout_marginLeft="130dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/signOutButton"
+                    android:text="SIGN OUT"
+                    android:layout_marginLeft="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/passText"
-            android:layout_marginTop="20dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:hint="Password"/>
 
 
-        <Button
-            android:id="@+id/calcButton"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/passText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="100dp"
-            android:onClick="tryLogin"
-            android:text="Log in" />
-
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/passText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="46dp"
-            android:text="Register" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_above="@+id/userText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:srcCompat="@tools:sample/avatars" />
+        </LinearLayout>
 </RelativeLayout>
