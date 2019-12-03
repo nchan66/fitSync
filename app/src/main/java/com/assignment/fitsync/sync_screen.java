@@ -42,6 +42,14 @@ public class sync_screen extends AppCompatActivity {
         setContentView(R.layout.activity_sync_screen);
 
 
+
+
+
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         //prepare data packet
         userPacket.put("Monday", userDoc.get("Monday"));
         userPacket.put("Tuesday", userDoc.get("Tuesday"));
@@ -50,8 +58,6 @@ public class sync_screen extends AppCompatActivity {
         userPacket.put("Friday", userDoc.get("Friday"));
         userPacket.put("Saturday", userDoc.get("Saturday"));
         userPacket.put("Sunday", userDoc.get("Sunday"));
-
-
     }
 
     public void goBack(View view) {
@@ -106,6 +112,9 @@ public class sync_screen extends AppCompatActivity {
                             }
                         }
                     });
+
+                    Intent go_back = new Intent(sync_screen.this, workout_screen.class);
+                    startActivity(go_back);
 
                 }
             }
