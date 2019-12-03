@@ -48,7 +48,7 @@ public class add_exercise extends AppCompatActivity {
 
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static CollectionReference members = db.collection("members");
-    public String userName = MainActivity.userID;                                //HARDCODING BROSCIENCE LIFE - CHANGE TO USER EMAIL FROM REGISTRATION
+    public String userName = MainActivity.userID;
     public DocumentReference userRef = db.collection("members").document(userName);
     public static DocumentSnapshot userDoc;
 
@@ -113,8 +113,8 @@ public class add_exercise extends AppCompatActivity {
         //check if day has a list already , if it does, if list exists -> make list = that, then add
 
 
-        Object day_list_Obj = userDoc.get(day_string);
-        ArrayList new_array_list = (ArrayList) day_list_Obj ;
+        Object day_list_Obj = userDoc.get(day_string); //GETS DAY OF THE WEEK's LIST
+        ArrayList new_array_list = (ArrayList) day_list_Obj ; //CASTS DEFAULT OBJ AS ARRAYLIST
 
         exercises = new_array_list;
 
@@ -126,7 +126,8 @@ public class add_exercise extends AppCompatActivity {
         dataPacket.put(day_string ,exercises);
 
 
-        //HARDCODING BROSCIENCELIFE DOCUMENT
+
+
         members.document(userName).update(dataPacket)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

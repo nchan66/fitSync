@@ -30,9 +30,8 @@ public class workout_screen extends AppCompatActivity {
 
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static CollectionReference members = db.collection("members");
-
-
-
+    public String userName = MainActivity.userID;
+    public DocumentReference userRef = db.collection("members").document(userName);
     public static DocumentSnapshot userDoc;
 
 
@@ -40,8 +39,6 @@ public class workout_screen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_screen);
-        final String userName = MainActivity.userID;
-        final DocumentReference userRef = db.collection("members").document(userName);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +96,16 @@ public class workout_screen extends AppCompatActivity {
         //intent to start other activity
         Intent add_exer = new Intent(this, add_exercise.class);
         startActivity(add_exer);
+
+
+    }
+
+
+    public void sync(View view) {
+
+        //intent to start other activity
+        Intent sync = new Intent(this, sync_screen.class);
+        startActivity(sync);
 
 
     }

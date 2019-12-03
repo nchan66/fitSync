@@ -1,7 +1,6 @@
 package com.assignment.fitsync;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +27,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,15 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView statusTextView;
     GoogleApiClient mGoogleApiClient;
     public static String userID;
-    public boolean login_success = false;
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth mAuth;
-
-    private Handler mHandler = new Handler();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,25 +65,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signInButton.setOnClickListener(this);
 
 
-    }
 
-    public Runnable run_workout_screen = new Runnable() {
-        @Override
-        public void run() {
-            //intent to start other activity
-            if(login_success) {
-                Intent intent = new Intent(MainActivity.this, workout_screen.class);
-                startActivity(intent);
-            }
-        }
-    };
+    }
 
     @Override
     public void onClick (View v){
         switch (v.getId()){
             case R.id.sign_in_button:
                 signIn();
-                mHandler.postDelayed(run_workout_screen,3000);
                 break;
         }
     }
@@ -158,13 +143,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()){
             GoogleSignInAccount acct = result.getSignInAccount();
-            statusTextView.setText("Welcome, " + acct.getDisplayName() + ", gathering information and signing you in now...");
-            login_success = true;
+            statusTextView.setText("Welcome, " + acct.getDisplayName());
         }
 
     }
 
+    public void tryLogin(View view) {
 
+        //intent to start other activity
+        Intent intent = new Intent(this, workout_screen.class);
+        startActivity(intent);
+
+
+    }
 
 }
 
