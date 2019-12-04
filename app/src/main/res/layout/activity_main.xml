@@ -25,14 +25,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <Button
-                    android:id="@+id/continue_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="tryLogin"
-                    app:backgroundTint="#FF920F"
-                    android:text="CONTINUE" />
-
 
         </LinearLayout>
 </RelativeLayout>

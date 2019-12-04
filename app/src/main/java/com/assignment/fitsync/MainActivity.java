@@ -151,14 +151,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void tryLogin(View view) {
-
-        //intent to start other activity
-        Intent intent = new Intent(this, workout_screen.class);
-        startActivity(intent);
-
-
-    }
 
     public void safeLogin() {
 
