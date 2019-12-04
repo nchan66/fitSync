@@ -57,7 +57,6 @@
         android:id="@+id/btnCancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="goBack"
         app:backgroundTint="#FF920F"
         android:text="CANCEL" />
 

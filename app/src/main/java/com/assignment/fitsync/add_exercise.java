@@ -3,11 +3,14 @@ package com.assignment.fitsync;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,14 +48,12 @@ public class add_exercise extends AppCompatActivity {
     public EditText set_view;
     public EditText rep_view;
     public Spinner day_view;
-
+    public Button btnCancel;
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static CollectionReference members = db.collection("members");
-    public String userName = MainActivity.userID;                                //HARDCODING BROSCIENCE LIFE - CHANGE TO USER EMAIL FROM REGISTRATION
+    public String userName = "BroScienceLife";//MainActivity.userID;                                //HARDCODING BROSCIENCE LIFE - CHANGE TO USER EMAIL FROM REGISTRATION
     public DocumentReference userRef = db.collection("members").document(userName);
     public static DocumentSnapshot userDoc;
-
-
 
 
     @Override
@@ -64,7 +65,7 @@ public class add_exercise extends AppCompatActivity {
         set_view = findViewById((R.id.sets));
         rep_view = findViewById((R.id.reps));
         day_view = findViewById(R.id.day_spinner);
-
+        btnCancel = findViewById(R.id.btnCancel);
 
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -82,7 +83,6 @@ public class add_exercise extends AppCompatActivity {
                 }
             }
         });
-
         Spinner spinner = (Spinner) findViewById(R.id.day_spinner);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -91,6 +91,14 @@ public class add_exercise extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+
+        // cancel and go back to workout screen
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack(0);
+            }
+        });
     }
 
     public void add(View view) {
@@ -144,18 +152,27 @@ public class add_exercise extends AppCompatActivity {
                 });
 
         //intent to start other activity
-        Intent go_back = new Intent(this, workout_screen.class);
-        startActivity(go_back);
+        goBack(1);
 
     }
 
-
-    public void goBack(View view) {
-
-        //intent to start other activity
-        Intent go_back = new Intent(this, workout_screen.class);
-        startActivity(go_back);
-
+    public void goBack(int i) {
+        int miTimer = 1500;
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("adding...");
+        if(i == 0) {
+            pd.setMessage("backing to Workout Screen..");
+        }
+        pd.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent in = new Intent(add_exercise.this, workout_screen.class);
+                pd.dismiss();
+                startActivity(in);
+            }
+        }, miTimer);
 
     }
+
 }
