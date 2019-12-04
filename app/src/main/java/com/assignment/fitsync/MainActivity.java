@@ -118,13 +118,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             userID = user.getUid();
                             Log.d(TAG, "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
                             Log.d(TAG, userID);
-                            //updateUI(user);
+
+                            safeLogin();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
+
+
                     }
                 });
 
@@ -148,7 +151,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void tryLogin(View view) {
+
+    public void safeLogin() {
 
         //intent to start other activity
         Intent intent = new Intent(this, workout_screen.class);
