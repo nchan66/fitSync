@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -50,6 +51,9 @@ public class sync_screen extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String user_email = user.getEmail();
+
         //prepare data packet
         userPacket.put("Monday", userDoc.get("Monday"));
         userPacket.put("Tuesday", userDoc.get("Tuesday"));
@@ -58,6 +62,7 @@ public class sync_screen extends AppCompatActivity {
         userPacket.put("Friday", userDoc.get("Friday"));
         userPacket.put("Saturday", userDoc.get("Saturday"));
         userPacket.put("Sunday", userDoc.get("Sunday"));
+        userPacket.put("sender", user_email);
     }
 
     public void goBack(View view) {
