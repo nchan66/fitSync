@@ -22,9 +22,17 @@
                     android:text=""/>
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/sign_in_button"
+                    android:layout_marginLeft="120dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/sign_out_button"
+                    android:text="SIGN OUT"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="370dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-
         </LinearLayout>
+
 </RelativeLayout>

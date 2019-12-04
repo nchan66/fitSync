@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth mAuth;
 
+    private GoogleSignInClient mGoogleSignInClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
@@ -57,13 +60,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+//        mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
+//                .enableAutoManage(this, this)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
+
         statusTextView = (TextView) findViewById(R.id.status_textview);
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(this);
 
+        signOutButton = (Button) findViewById(R.id.sign_out_button);
+        signOutButton.setOnClickListener(this);
 
 
     }
@@ -74,13 +81,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.sign_in_button:
                 signIn();
                 break;
+            case R.id.sign_out_button:
+
+                signOut();
+                break;
         }
     }
 
     private void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+    private void signOut(){
+        System.out.println("************************ sign out button /////////////");
+        mAuth.signOut();
+
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                statusTextView.setText("Signed Out");
+            }
+        });
+
+
+
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
