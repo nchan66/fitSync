@@ -7,6 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical"
+    android:background="@android:color/holo_blue_light"
     tools:context=".add_exercise">
 
     <EditText
