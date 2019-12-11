@@ -8,6 +8,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="16dp"
+        android:background="#FFFFFF"
         tools:context=".MainActivity">
 
 
@@ -15,15 +16,38 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/fitsynk_logo" />
+
                 <TextView
                     android:id="@+id/status_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text=""/>
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/sign_in_button"
+                    app:buttonSize="wide"
+                    app:colorScheme="dark"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/sign_out_button"
+                    android:layout_width="120dp"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:background="@android:color/white"
+                    android:layout_marginLeft="130dp"
+                    android:layout_height="40dp"
+                    android:text="sign out" />
+
 
 
         </LinearLayout>

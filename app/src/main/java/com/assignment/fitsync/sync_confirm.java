@@ -125,13 +125,13 @@ public class sync_confirm extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "OVERWRITTEN DATA WOOHOOO YOU DID IT!");
-                        System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||");
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        System.out.println("*******************************************************");
+
                         Log.w(TAG, "Error writing document", e);
                     }
                 });

@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -76,9 +74,6 @@ public class BackgroundService extends Service {
             @Override
             public void run() {
                 DocumentReference userEmailRef = null;
-                System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
-                System.out.println("CHECKING FOR DOC WITH MY EMAIL");// check sync here?
-                System.out.println("***********************************************************************");
                 userEmailRef = db.collection("members").document(user_email);
 
                 userEmailRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

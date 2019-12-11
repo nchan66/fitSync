@@ -42,7 +42,7 @@ public class edit_exercise extends AppCompatActivity {
     // initialize firestore referrence
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static CollectionReference members = db.collection("members");
-    public String userName = MainActivity.userID;                                //HARDCODING BROSCIENCE LIFE - CHANGE TO USER EMAIL FROM REGISTRATION
+    public String userName = MainActivity.userID;
     public DocumentReference userRef = db.collection("members").document(userName);
     public static DocumentSnapshot userDoc;
     private static final String TAG = "Edit_Exercise";
@@ -133,12 +133,12 @@ public class edit_exercise extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG, "DocumentSnapshot successfully written!");
-                                System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||");
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                System.out.println("*******************************************************");
+
                                 Log.w(TAG, "Error writing document", e);
                             }
                         });

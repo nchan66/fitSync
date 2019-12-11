@@ -101,13 +101,13 @@ public class sync_screen extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Log.d(TAG, "DocumentSnapshot successfully written!");
-                                                    System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||");
+
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    System.out.println("*******************************************************");
+
                                                     Log.w(TAG, "Error writing document", e);
                                                 }
                                             });

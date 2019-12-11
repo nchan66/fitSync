@@ -2,13 +2,10 @@ package com.assignment.fitsync;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
@@ -28,7 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -122,7 +119,7 @@ public class workout_screen extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d(TAG, "DocumentSnapshot successfully written!");
-                                        System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||");
+
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -169,7 +166,6 @@ public class workout_screen extends AppCompatActivity {
                             // get field on Monday
                             Object day_list_obj = userDoc.get(date[i]);
                             System.out.println(date[i]);
-                            //Map<String, Object> mymap = userDoc.getData();
                             ArrayList myobj = (ArrayList) day_list_obj;
 
                             Map<String, Object> field = new HashMap<>();
@@ -203,13 +199,13 @@ public class workout_screen extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d(TAG, "DocumentSnapshot successfully written!");
-                                        System.out.println("|||||||||||||||||||||||||||||||||||||||||||||||||||||");
+
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        System.out.println("*******************************************************");
+
                                         Log.w(TAG, "Error writing document", e);
                                     }
                                 });
@@ -227,10 +223,12 @@ public class workout_screen extends AppCompatActivity {
             TextView my_txt =new TextView(this);
             my_txt.setText(txt);
             my_txt.setId(0);
-            my_txt.setBackgroundColor(Color.parseColor("#cce6ff"));
+            //set text color by hex string
+            my_txt.setBackgroundColor(Color.parseColor("#2A8FFF"));
+            my_txt.setTextColor(Color.parseColor("#FFFFFF"));
             my_txt.setTypeface(my_txt.getTypeface(), Typeface.BOLD);
-            my_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            my_txt.setPadding(20, 15, 20,15);
+            my_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+            my_txt.setPadding(30, 20, 30,20);
             // margin the textview
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -282,7 +280,7 @@ public class workout_screen extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        System.out.println("I RUN HERE IN WOKROUT_SCREEN *******************************************************************************************************************************************************************");
+
         serviceIntent = new Intent(this, BackgroundService.class);
         startService(serviceIntent);
         bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE); // Start the background service. Then bind
@@ -332,7 +330,7 @@ public class workout_screen extends AppCompatActivity {
 
     public static void startSyncConfirm() {
         //work here after called from BS
-        System.out.println("BEEP BOOOP BOOP BOP **********************************************************************************************************");
+
         if (started_activity == false) {
             Intent sync_confirm = new Intent(mContext, sync_confirm.class);
             mContext.startActivity(sync_confirm);
